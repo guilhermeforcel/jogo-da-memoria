@@ -1,6 +1,6 @@
-function askNum(){
-   const nCartas = parseInt(prompt(`Com quantas cartas você quer jogar?
-(números pares, de 4 a 14)`));
+function askNum(erro=""){
+   const nCartas = parseInt(prompt(`${erro}Com quantas cartas você quer jogar?
+(4 a 14 cartas em par)`));
 
     return nCartas;
 }
@@ -17,15 +17,44 @@ let nCartas = askNum();
 let valido = numValido(nCartas);
 
 while(!valido){
-    nCartas = askNum();
+    const erro = `Número de cartas inválido!
+
+>> Digite um número par, de 4 a 14
+
+`
+    nCartas = askNum(erro);
     valido = numValido(nCartas);
     console.log(valido)
-}
-    for(let i=0; i<nCartas; i++){
-        
-        console.log("valido")
-        const mesa = document.querySelector(".mesa");
-        
-        mesa.innerHTML += `<div class="card"><img src="./img/front.png" alt=""></div>`;
-        console.log(`adicionado ${i} carta`);
+}  
+
+const idCard = [];
+
+for(let i=0; i<nCartas/2; i++){
+
+    idCard.push(i);
+    idCard.push(i);
+    
     }
+    
+console.log(idCard);
+idCard.sort(funcComparacao);
+console.log(idCard);
+
+for(let i=0; i<nCartas; i++){
+
+    const templateCarta = `<div class="card tipo${idCard[i]}" onclick="flip(this)"><img src="./img/front.png" alt=""></div>`;
+    const mesa = document.querySelector(".mesa");
+        
+    mesa.innerHTML += templateCarta;
+    console.log(`adicionado ${i} carta`);
+}
+
+function funcComparacao(){
+    return Math.random() - 0.5;
+}
+
+function flip(elemento){
+
+    elemento.classList.add("flipped");
+    
+}
