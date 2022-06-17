@@ -31,8 +31,9 @@ const idCard = [];
 
 for(let i=0; i<nCartas/2; i++){
 
-    idCard.push(i);
-    idCard.push(i);
+    let idTipo = "tipo"+i;
+    idCard.push(idTipo);
+    idCard.push(idTipo);
     
     }
     
@@ -42,7 +43,7 @@ console.log(idCard);
 
 for(let i=0; i<nCartas; i++){
 
-    const templateCarta = `<div class="card tipo${idCard[i]}" onclick="flip(this)"><img src="./img/front.png" alt=""></div>`;
+    const templateCarta = `<div class="card ${idCard[i]}" onclick="flip(this)">${idCard[i]}<img src="./img/front.png" alt=""></div>`;
     const mesa = document.querySelector(".mesa");
         
     mesa.innerHTML += templateCarta;
@@ -53,8 +54,50 @@ function funcComparacao(){
     return Math.random() - 0.5;
 }
 
-function flip(elemento){
+let parVirado = []
 
-    elemento.classList.add("flipped");
+function flip(elemento){ //VERIFICAR CASOS DE CLIQUE NO MESMA CARTA!!!!
+
+    const dadosCard = elemento.classList;
+    console.log("classes da carta: "+ dadosCard);
+    const tipo = dadosCard[1];
+    console.log("carta: "+ tipo )
+
+    if(elemento.classList.contains("flipped")){
+        
+        console.log("escolha outra!");
+
+    }else{
+
+        elemento.classList.add("flipped");
+        parVirado.push(tipo);
+        console.log(parVirado)
+        
+        setTimeout(paresCard, 2000)
+    }
     
+    
+}
+
+let score = 0;
+
+function paresCard(elemento){
+    if(parVirado.length===2){
+        let card1 = document.querySelector(`.${parVirado[0]}.flipped`);
+        let card2 = document.querySelector(`.${parVirado[1]}.flipped`);
+
+        let igual = parVirado[0]===parVirado[1];
+
+        if(igual){
+            alert("CERTO!")
+            score++;
+        }else{
+            alert("ERRADO!")
+            card1.classList.toggle("flipped");
+            card2.classList.toggle("flipped");
+            
+        }
+
+        parVirado=[];
+    }
 }
