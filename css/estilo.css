@@ -8,6 +8,7 @@
 body{
     background-color: #EEF9BF;
     font-family: 'Roboto', sans-serif;
+    transition: 1s;
 }
 
 h1 {
@@ -17,6 +18,8 @@ h1 {
     font-weight: bold;
     margin: 56px;
     color:#75B79E;
+    transition: 1s;
+
 }
 
 .mesa {
@@ -40,7 +43,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 1s;
+    transition:  transform 1s, border 1s;
 }
 
 .card.flipped{
@@ -51,6 +54,37 @@ img {
     width: 100px;
     object-fit: contain;
 
+}
+
+.card.acerto {
+    border-width: 8px;
+    border-color: rgba(0, 245, 0, .7);
+}
+.card.erro {
+    border-width: 8px;
+    border-color: rgba(235, 29, 2, .7);
+}
+
+body.completo {
+    filter:brightness(1.1);
+}
+
+h1:hover{
+    cursor:help;
+}
+
+.loro{
+
+    width: 200px;
+    position: fixed;
+    top: -300px;
+    left: 0;
+    transform: rotateZ(180deg);
+    transition: 1s ease-in-out;
+}
+.loro.carinho{
+    transform: translateY(200px) rotateZ(180deg);
+    
 }
 
 @media (max-width: 350px){
@@ -67,5 +101,9 @@ img {
     h1 {
         margin:30px;
         font-size: 36px;
+    }
+
+    .loro{
+        display: none;
     }
 }

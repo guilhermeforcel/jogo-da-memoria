@@ -15,6 +15,8 @@ function numValido(nCartas){
 
 let nCartas = askNum();
 let valido = numValido(nCartas);
+let score = 0;
+let viradas = 0;
 
 while(!valido){
     const erro = `Número de cartas inválido!
@@ -62,7 +64,7 @@ function flip(elemento){ //VERIFICAR CASOS DE CLIQUE NO MESMA CARTA!!!!
     console.log("classes da carta: "+ dadosCard);
     const tipo = dadosCard[1];
     console.log("carta: "+ tipo )
-
+    
     if(elemento.classList.contains("flipped")){
         
         console.log("escolha outra!");
@@ -73,15 +75,15 @@ function flip(elemento){ //VERIFICAR CASOS DE CLIQUE NO MESMA CARTA!!!!
         parVirado.push(tipo);
         console.log(parVirado)
         
-        setTimeout(paresCard, 2000)
+        setTimeout(paresCard, 1000)
+
+        viradas++;
     }
-    
     
 }
 
-let score = 0;
-
 function paresCard(elemento){
+
     if(parVirado.length===2){
         let card1 = document.querySelector(`.${parVirado[0]}.flipped`);
         let card2 = document.querySelector(`.${parVirado[1]}.flipped`);
@@ -89,15 +91,47 @@ function paresCard(elemento){
         let igual = parVirado[0]===parVirado[1];
 
         if(igual){
-            alert("CERTO!")
+            console.log("CERTO!")
+            let cardsIguais=document.querySelectorAll(`.${parVirado[0]}`);
+
+            pisca(cardsIguais[0],cardsIguais[1],"acerto");
             score++;
+
+            if (score === nCartas/2){
+                setTimeout(function(){
+                const body = document.querySelector("body");
+                const titulo = document.querySelector("h1");
+                pisca(body,titulo,"completo");  
+                },500);
+                setTimeout(function(){
+                console.log("JOGO CONCLUIDO");
+                alert(`Você ganhou em ${viradas} jogadas!`)
+                },1500);
+            }
+
         }else{
-            alert("ERRADO!")
-            card1.classList.toggle("flipped");
-            card2.classList.toggle("flipped");
+            console.log("ERRADO!")
+            
+            pisca(card1,card2,"erro");
+
+            setTimeout(function() {card1.classList.toggle("flipped");card2.classList.toggle("flipped");},1000);
             
         }
 
         parVirado=[];
     }
+}
+
+function pisca(c1,c2,escolha){
+
+    c1.classList.toggle(`${escolha}`);
+    c2.classList.toggle(`${escolha}`);
+
+    setTimeout(function() {c1.classList.toggle(`${escolha}`);c2.classList.toggle(`${escolha}`);},500);
+}
+
+function loro(){
+    const loro = document.querySelector(".loro");
+    loro.classList.toggle("carinho");
+    setTimeout(function(){loro.classList.toggle("carinho");},1000);
 }
