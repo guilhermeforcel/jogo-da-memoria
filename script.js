@@ -17,6 +17,12 @@ let nCartas = askNum();
 let valido = numValido(nCartas);
 let score = 0;
 let viradas = 0;
+let tempo = 0;
+const timer = document.querySelector(".tempo");
+const idIntervalo = setInterval(function(){
+    tempo++;
+    timer.innerHTML = `${tempo}`;
+},1000);
 
 while(!valido){
     const erro = `Número de cartas inválido!
@@ -105,8 +111,13 @@ function paresCard(elemento){
                 },500);
                 setTimeout(function(){
                 console.log("JOGO CONCLUIDO");
-                alert(`Você ganhou em ${viradas} jogadas!`)
+                clearInterval(idIntervalo);
+                alert(`Você ganhou em ${viradas} jogadas!\nTempo de jogo: ${tempo} s`);
+                tempo = 0;
+                location = location;
                 },1500);
+                
+
             }
 
         }else{
